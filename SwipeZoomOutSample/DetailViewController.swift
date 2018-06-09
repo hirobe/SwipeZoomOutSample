@@ -83,8 +83,8 @@ class DetailViewController: UIViewController {
                                    height: containerView.frame.height - safeAreaInsets.top - safeAreaInsets.bottom)
 
         // imageViewはsafeArea一杯に配置されていて、aspectFillで表示中の画像はそれより小さい。縦横比から画面内のimageの領域を計算する
-        let size:CGSize = parentImage?.size ?? .zero
-        let rate = containerView.frame.size.width / size.width
+        guard let size:CGSize = parentImage?.size else { return .zero }
+        let rate = min(safeAreaFrame.size.width / size.width, safeAreaFrame.size.height / size.height)
         let imageSize = CGSize(width: size.width * rate, height: size.height * rate)
         var imageFrame = CGRect(x: (safeAreaFrame.width - imageSize.width) / 2.0 + safeAreaInsets.left,
                                 y: (safeAreaFrame.height - imageSize.height) / 2.0 + safeAreaInsets.top,
